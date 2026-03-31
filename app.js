@@ -16,8 +16,8 @@ const remainingInput = document.getElementById("remaining");
 const receiptDateInput = document.getElementById("receipt-date");
 
 const previewPhone = document.getElementById("preview-phone");
-const previewPrice = document.getElementById("preview-price");
-const previewPaid = document.getElementById("preview-paid");
+const previewPriceNum = document.getElementById("preview-price-num");
+const previewPaidNum = document.getElementById("preview-paid-num");
 const previewRemaining = document.getElementById("preview-remaining");
 const previewSignature = document.getElementById("preview-signature");
 const previewSignatureEmpty = document.getElementById("preview-signature-empty");
@@ -130,9 +130,9 @@ function hideModal() {
   appModal.setAttribute("aria-hidden", "true");
 }
 
-function formatMAD(value) {
+function formatMADAmount(value) {
   const n = Math.round(Number(value));
-  return `${Number.isFinite(n) ? n : 0} درهم`;
+  return String(Number.isFinite(n) ? n : 0);
 }
 
 function formatNow() {
@@ -387,9 +387,18 @@ function updatePreview() {
   const remaining = toNumber(remainingInput.value);
 
   previewPhone.textContent = formatPhoneForDisplay(phone);
-  previewPrice.textContent = formatMAD(price);
-  previewPaid.textContent = formatMAD(paid);
-  previewRemaining.textContent = formatMAD(remaining);
+  if (previewPriceNum) {
+    previewPriceNum.textContent = formatMADAmount(price);
+  }
+  if (previewPaidNum) {
+    previewPaidNum.textContent = formatMADAmount(paid);
+  }
+  if (previewRemaining) {
+    const remNum = previewRemaining.querySelector(".value__num");
+    if (remNum) {
+      remNum.textContent = formatMADAmount(remaining);
+    }
+  }
   previewReceiptNo.textContent = receiptNumber;
   previewDate.textContent = formatSelectedDate(receiptDateInput.value);
 
@@ -765,6 +774,20 @@ async function exportPdf() {
             background: #ffffff !important;
             color: #2f2418 !important;
             border-color: #d8c2a1 !important;
+            text-rendering: optimizeLegibility !important;
+            -webkit-font-smoothing: antialiased !important;
+          }
+          #receipt-preview .receipt-title {
+            word-spacing: 0.12em !important;
+            line-height: 1.45 !important;
+          }
+          #receipt-preview .receipt-subtitle {
+            word-spacing: 0.1em !important;
+            line-height: 1.5 !important;
+          }
+          #receipt-preview .receipt-title__gap,
+          #receipt-preview .receipt-subtitle__gap {
+            padding-inline: 0.15em !important;
           }
           #receipt-preview .receipt-top,
           #receipt-preview .receipt-meta,
@@ -781,13 +804,27 @@ async function exportPdf() {
           #receipt-preview .row .label {
             color: #6d5842 !important;
           }
+          #receipt-preview .receipt-meta strong {
+            margin-inline-start: 0.35em !important;
+          }
           #receipt-preview .receipt-meta p {
             background: #fff8ef !important;
             border-color: #efd9bb !important;
+            gap: 12px !important;
+            column-gap: 12px !important;
+            padding: 8px 10px !important;
           }
           #receipt-preview .row {
             background: #fffaf3 !important;
             border-color: #efd9bb !important;
+            gap: 14px !important;
+            column-gap: 14px !important;
+            padding: 10px 12px !important;
+          }
+          #receipt-preview .value--money {
+            gap: 0.4em !important;
+            display: inline-flex !important;
+            align-items: baseline !important;
           }
           #receipt-preview #preview-signature {
             background: #ffffff !important;

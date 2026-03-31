@@ -224,36 +224,50 @@
         <article id="receipt-preview" class="receipt" dir="rtl" lang="ar">
           <header class="receipt-top">
             <img class="brand-logo receipt-logo" src="./assets/logo.png" alt="شعار المجموعة" />
-            <h3>مجموعة رشيد ولد المعطي</h3>
-            <p>برئاسة المعلم رشيد ولد المعطي</p>
+            <h3 class="receipt-title">
+              <span class="receipt-title__line">مجموعة رشيد</span>
+              <span class="receipt-title__gap" aria-hidden="true"> </span>
+              <span class="receipt-title__line">ولد المعطي</span>
+            </h3>
+            <p class="receipt-subtitle">
+              <span>برئاسة المعلم</span>
+              <span class="receipt-subtitle__gap" aria-hidden="true"> </span>
+              <span>رشيد ولد المعطي</span>
+            </p>
           </header>
           <div class="receipt-meta">
             <p>
-              <span>رقم الوصل:</span>
+              <span class="receipt-meta__label">رقم الوصل</span><span class="receipt-meta__colon">:</span>
               <strong id="preview-receipt-no">RC-000001</strong>
             </p>
             <p>
-              <span>التاريخ:</span>
+              <span class="receipt-meta__label">التاريخ</span><span class="receipt-meta__colon">:</span>
               <strong id="preview-date">-</strong>
             </p>
           </div>
 
           <div class="receipt-grid">
-            <div class="row">
+            <div class="row row--split">
               <span class="label">رقم الهاتف</span>
               <span class="value value--ltr" id="preview-phone" dir="ltr" translate="no">-</span>
             </div>
-            <div class="row">
+            <div class="row row--split">
               <span class="label">الثمن</span>
-              <span class="value" id="preview-price">0 درهم</span>
+              <span class="value value--money" dir="ltr">
+                <span id="preview-price-num" class="value__num">0</span><span class="value__gap"> </span><span class="value__unit">درهم</span>
+              </span>
             </div>
-            <div class="row">
+            <div class="row row--split">
               <span class="label">الدفع</span>
-              <span class="value" id="preview-paid">0 درهم</span>
+              <span class="value value--money" dir="ltr">
+                <span id="preview-paid-num" class="value__num">0</span><span class="value__gap"> </span><span class="value__unit">درهم</span>
+              </span>
             </div>
-            <div class="row">
+            <div class="row row--split">
               <span class="label">الباقي</span>
-              <span class="value" id="preview-remaining">0 درهم</span>
+              <span id="preview-remaining" class="value value--money" dir="ltr">
+                <span class="value__num">0</span><span class="value__gap"> </span><span class="value__unit">درهم</span>
+              </span>
             </div>
           </div>
 

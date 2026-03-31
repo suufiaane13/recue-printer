@@ -678,15 +678,29 @@ body[data-theme="dark"] .receipt {
   margin: 0;
   font-size: clamp(17px, 4.5vw, 21px);
   color: #2f2418;
-  line-height: 1.25;
+  line-height: 1.45;
   overflow-wrap: anywhere;
 }
 
-.receipt-top p {
+.receipt-title {
+  word-spacing: 0.12em;
+}
+
+.receipt-title__gap,
+.receipt-subtitle__gap {
+  display: inline;
+  white-space: pre;
+  padding-inline: 0.15em;
+  user-select: none;
+}
+
+.receipt-subtitle {
   margin: 4px 0 0;
   color: #6d5842;
   font-size: 13px;
   font-weight: 600;
+  line-height: 1.5;
+  word-spacing: 0.1em;
 }
 
 .receipt-meta {
@@ -700,13 +714,18 @@ body[data-theme="dark"] .receipt {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
+  column-gap: 12px;
   font-size: clamp(12px, 3.2vw, 13px);
   background: #fff8ef;
   border: 1px solid #efd9bb;
   border-radius: 10px;
-  padding: 6px 8px;
+  padding: 8px 10px;
   min-width: 0;
+}
+
+.receipt-meta__colon {
+  margin-inline-end: 0.2em;
 }
 
 .receipt-meta p:last-child {
@@ -725,6 +744,8 @@ body[data-theme="dark"] .receipt {
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: break-word;
+  margin-inline-start: 0.35em;
+  flex-shrink: 0;
 }
 
 .receipt-grid {
@@ -736,12 +757,37 @@ body[data-theme="dark"] .receipt {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
+  column-gap: 14px;
   border: 1px solid #efd9bb;
   border-radius: 10px;
-  padding: 9px 10px;
+  padding: 10px 12px;
   background: #fffaf3;
   min-width: 0;
+}
+
+.row--split .label {
+  padding-inline-end: 4px;
+}
+
+.value--money {
+  display: inline-flex;
+  align-items: baseline;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: flex-end;
+  text-align: end;
+  min-width: 0;
+}
+
+.value--money .value__gap {
+  display: inline-block;
+  min-width: 0.2em;
+}
+
+.value--money .value__unit {
+  white-space: nowrap;
 }
 
 body[data-theme="dark"] .row {

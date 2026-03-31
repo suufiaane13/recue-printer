@@ -1,3 +1,13 @@
+(function registerServiceWorkerPwa() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+  const swAbsolute = new URL("sw.js", window.location.href);
+  navigator.serviceWorker
+    .register(swAbsolute, { scope: "/" })
+    .catch(() => {});
+})();
+
 const form = document.getElementById("receipt-form");
 const phoneInput = document.getElementById("phone");
 const priceInput = document.getElementById("price");
@@ -966,11 +976,6 @@ restoreState().then(() => {
 });
 
 window.addEventListener("load", () => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .register("./sw.js", { scope: "./" })
-      .catch(() => {});
-  }
   if (!appLoader) {
     document.body.classList.add("app-ready");
     return;

@@ -1,9 +1,10 @@
 {
+  "id": "/",
   "name": "وصل الأداء الإلكتروني - مجموعة رشيد",
   "short_name": "وصل الأداء",
   "description": "إنشاء وصل أداء مع توقيع رقمي",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#f8f4ec",
@@ -12,16 +13,16 @@
   "dir": "rtl",
   "icons": [
     {
-      "src": "assets/logo.png",
+      "src": "/assets/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/logo.png",
+      "src": "/assets/logo.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

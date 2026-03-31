@@ -20,6 +20,13 @@ Application web statique (HTML / CSS / JavaScript) pour générer un **reçu de 
 
 > L’installation ne fonctionne pas en ouvrant le fichier en `file://` : il faut une origine **http(s)**.
 
+#### Si « Installer l’application » n’apparaît pas
+
+- Vérifier **HTTPS** (ou `http://localhost` en dev).
+- **`assets/logo.png`** doit exister et faire **au moins 512×512 px** (Chrome vérifie les tailles déclarées dans le manifeste). Sinon remplacez par un PNG carré ≥ 512 px.
+- Chrome : **F12 → Application → Manifest** et **Service Workers** (erreurs en rouge).
+- Le fichier **`netlify.toml`** fixe le type MIME du manifeste (important sur Netlify).
+
 ## Prérequis
 
 - Navigateur récent (Chrome, Edge, Firefox, Safari)
@@ -53,6 +60,7 @@ Hébergement **statique** suffisant (GitHub Pages, Netlify, Cloudflare Pages, et
 | `server.js` | Serveur HTTP local optionnel (Node) |
 | `manifest.webmanifest` | Métadonnées PWA (nom, icônes, thème) |
 | `sw.js` | Service worker (critère d’installation) |
+| `netlify.toml` | En-têtes MIME pour le manifeste (Netlify) |
 | `assets/` | Ressources (ex. logo) |
 
 ## Bibliothèques (CDN)

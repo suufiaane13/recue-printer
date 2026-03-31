@@ -271,11 +271,14 @@ label {
 }
 
 input {
+  width: 100%;
   height: 46px;
+  min-height: 46px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: #fffdf9;
   padding-inline: 12px;
+  padding-block: 0;
   font-size: 15px;
   font-family: Cairo, "Segoe UI", Tahoma, Arial, sans-serif;
   font-weight: 600;
@@ -283,6 +286,14 @@ input {
   text-align: start;
   outline: none;
   transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+/* Même boîte que les champs texte (les UA gonflent souvent datetime-local) */
+input[type="datetime-local"] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  line-height: 1.2;
 }
 
 input:hover {
@@ -370,6 +381,22 @@ body[data-theme="dark"] input[type="datetime-local"] {
 
 #receipt-date::-webkit-datetime-edit {
   text-align: right;
+  display: inline-flex;
+  align-items: center;
+  min-height: 100%;
+  padding: 0;
+  flex: 1 1 auto;
+}
+
+#receipt-date::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  column-gap: 0.2em;
+}
+
+#receipt-date::-webkit-datetime-edit-text {
+  padding: 0;
 }
 
 input[readonly].is-updated {

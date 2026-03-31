@@ -121,7 +121,8 @@ function hideModal() {
 }
 
 function formatMAD(value) {
-  return `${Number(value).toFixed(2)} درهم`;
+  const n = Math.round(Number(value));
+  return `${Number.isFinite(n) ? n : 0} درهم`;
 }
 
 function formatNow() {
@@ -333,12 +334,12 @@ function getValidationError() {
     return "رقم الهاتف غير صالح. استعمل صيغة مثل 06xxxxxxxx.";
   }
 
-  if (price <= 0) {
-    return "الثمن يجب أن يكون أكبر من 0.";
+  if (price < 1 || !Number.isInteger(price)) {
+    return "الثمن يجب أن يكون عددا صحيحا لا يقل عن 1.";
   }
 
-  if (paid < 0) {
-    return "الدفع لا يمكن أن يكون سالبا.";
+  if (paid < 0 || !Number.isInteger(paid)) {
+    return "الدفع يجب أن يكون عددا صحيحا (بدون فاصلة عشرية).";
   }
 
   if (paid > price) {
@@ -357,7 +358,7 @@ function updateRemaining() {
   const price = toNumber(priceInput.value);
   const paid = toNumber(paidInput.value);
   const remaining = Math.max(price - paid, 0);
-  const nextValue = remaining.toFixed(2);
+  const nextValue = String(Math.round(remaining));
   remainingInput.value = nextValue;
   if (previousValue !== nextValue) {
     remainingInput.classList.remove("is-updated");

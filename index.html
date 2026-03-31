@@ -103,12 +103,13 @@
               id="price"
               name="price"
               type="number"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="1"
               required
             />
-            <small class="field-help">القيمة الإجمالية بالدرهم</small>
+            <small class="field-help">القيمة بالدرهم (عدد صحيح، 1 كحد أدنى)</small>
           </div>
 
           <div class="field-row">
@@ -121,8 +122,9 @@
                 name="paid"
                 type="number"
                 min="0"
-                step="0.01"
-                placeholder="0.00"
+                step="1"
+                inputmode="numeric"
+                placeholder="0"
                 required
               />
               <small class="field-help">المبلغ الذي تم دفعه فعليا</small>
@@ -135,7 +137,7 @@
                 name="remaining"
                 type="text"
                 readonly
-                value="0.00"
+                value="0"
                 aria-live="polite"
               />
               <small class="field-help">يتم حسابه تلقائيا</small>
@@ -242,15 +244,15 @@
             </div>
             <div class="row">
               <span class="label">الثمن</span>
-              <span class="value" id="preview-price">0.00 درهم</span>
+              <span class="value" id="preview-price">0 درهم</span>
             </div>
             <div class="row">
               <span class="label">الدفع</span>
-              <span class="value" id="preview-paid">0.00 درهم</span>
+              <span class="value" id="preview-paid">0 درهم</span>
             </div>
             <div class="row">
               <span class="label">الباقي</span>
-              <span class="value" id="preview-remaining">0.00 درهم</span>
+              <span class="value" id="preview-remaining">0 درهم</span>
             </div>
           </div>
 

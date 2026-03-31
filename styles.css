@@ -738,6 +738,13 @@ body[data-theme="dark"] .row {
   font-size: clamp(13px, 3.4vw, 15px);
 }
 
+/* Numéro marocain : lecture gauche → droite dans le reçu RTL */
+.row .value--ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
+}
+
 .receipt-footer {
   margin-top: 14px;
   border-top: 1px dashed #d9bb91;

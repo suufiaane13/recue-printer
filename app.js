@@ -965,6 +965,11 @@ restoreState().then(() => {
 });
 
 window.addEventListener("load", () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("./sw.js", { scope: "./" })
+      .catch(() => {});
+  }
   if (!appLoader) {
     document.body.classList.add("app-ready");
     return;

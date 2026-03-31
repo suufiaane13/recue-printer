@@ -10,6 +10,15 @@ Application web statique (HTML / CSS / JavaScript) pour générer un **reçu de 
 - Export PDF (html2canvas + jsPDF) ; logo inclus en contexte HTTP
 - Thème clair / sombre mémorisé
 - Persistance locale du formulaire et de la signature (`localStorage`)
+- **PWA** : installable sur Android (Chrome) et assimilable sur d’autres navigateurs (`manifest.webmanifest`, `sw.js`)
+
+### Installer sur Android (Chrome)
+
+1. Déployer le site en **HTTPS** (Netlify, etc.) ou tester en local avec `node server.js`.
+2. Ouvrir le site dans **Chrome**.
+3. Menu **⋮** → **Installer l’application** ou **Ajouter à l’écran d’accueil** (libellé selon la version).
+
+> L’installation ne fonctionne pas en ouvrant le fichier en `file://` : il faut une origine **http(s)**.
 
 ## Prérequis
 
@@ -42,6 +51,8 @@ Hébergement **statique** suffisant (GitHub Pages, Netlify, Cloudflare Pages, et
 | `styles.css` | Styles et thème |
 | `app.js` | Logique métier, signature, PDF, stockage |
 | `server.js` | Serveur HTTP local optionnel (Node) |
+| `manifest.webmanifest` | Métadonnées PWA (nom, icônes, thème) |
+| `sw.js` | Service worker (critère d’installation) |
 | `assets/` | Ressources (ex. logo) |
 
 ## Bibliothèques (CDN)

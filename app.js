@@ -743,6 +743,49 @@ function applyDefaultSignatureLockIfPresent() {
   }
 }
 
+/** Même URL que index.html ; display=swap pour mise en cache fiable avant capture. */
+const CAIRO_FONT_STYLESHEET =
+  "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap";
+
+async function ensureCairoFontsForPdf() {
+  if (!document.fonts || !document.fonts.ready) {
+    return;
+  }
+  await document.fonts.ready;
+  const weights = ["400", "600", "700", "800"];
+  await Promise.all(
+    weights.map((w) =>
+      document.fonts.load(`${w} 18px Cairo`).catch(() => {}),
+    ),
+  );
+}
+
+/**
+ * Le document cloné par html2canvas ne réutilise pas toujours les @font-face du parent :
+ * on injecte preconnect + feuille Cairo pour que le rendu canvas ait la bonne police.
+ */
+function injectCairoFontsIntoPdfClone(documentClone) {
+  const head = documentClone.head;
+  if (!head || head.querySelector("link[data-pdf-cairo]")) {
+    return;
+  }
+  const preG = documentClone.createElement("link");
+  preG.rel = "preconnect";
+  preG.href = "https://fonts.googleapis.com";
+  const preS = documentClone.createElement("link");
+  preS.rel = "preconnect";
+  preS.href = "https://fonts.gstatic.com";
+  preS.setAttribute("crossorigin", "anonymous");
+  const fontLink = documentClone.createElement("link");
+  fontLink.rel = "stylesheet";
+  fontLink.href = CAIRO_FONT_STYLESHEET;
+  fontLink.setAttribute("data-pdf-cairo", "1");
+  const anchor = head.firstChild;
+  head.insertBefore(preG, anchor);
+  head.insertBefore(preS, preG.nextSibling);
+  head.insertBefore(fontLink, preS.nextSibling);
+}
+
 async function exportPdf() {
   const error = getValidationError();
   if (error) {
@@ -754,6 +797,7 @@ async function exportPdf() {
   downloadPdfButton.textContent = "...جاري التحميل";
   try {
     updatePreview();
+    await ensureCairoFontsForPdf();
     const logoDataUrl = getLogoDataUrl();
     const exportSignatureDataUrl =
       getNormalizedSignatureDataUrlForExport() ||
@@ -765,17 +809,25 @@ async function exportPdf() {
       useCORS: false,
       allowTaint: true,
       backgroundColor: "#ffffff",
+      foreignObjectRendering: true,
       onclone: (documentClone) => {
+        injectCairoFontsIntoPdfClone(documentClone);
         documentClone.documentElement.setAttribute("data-theme", "light");
         documentClone.body.setAttribute("data-theme", "light");
         const forcedLightStyle = documentClone.createElement("style");
         forcedLightStyle.textContent = `
+          #receipt-preview,
+          #receipt-preview * {
+            font-family: Cairo, "Segoe UI", Tahoma, Arial, sans-serif !important;
+          }
           #receipt-preview {
             background: #ffffff !important;
             color: #2f2418 !important;
             border-color: #d8c2a1 !important;
-            text-rendering: optimizeLegibility !important;
+            text-rendering: geometricPrecision !important;
             -webkit-font-smoothing: antialiased !important;
+            font-synthesis: none !important;
+            font-variant-ligatures: common-ligatures !important;
           }
           #receipt-preview .receipt-title {
             word-spacing: 0.12em !important;

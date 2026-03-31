@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>وصل الأداء الإلكتروني - مجموعة رشيد</title>
+    <style>
+      html,
+      body {
+        background: #f8f4ec;
+      }
+      html[data-theme="dark"],
+      html[data-theme="dark"] body {
+        background: #16130f;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem("receipt-theme-v1");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = savedTheme || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+          document.documentElement.style.background =
+            theme === "dark" ? "#16130f" : "#f8f4ec";
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=optional"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app-loader" class="app-loader" aria-live="polite">
+      <div class="app-loader__content">
+        <img class="app-loader__logo" src="./assets/logo.png" alt="شعار المجموعة" />
+        <p class="app-loader__text">...جاري التحميل</p>
+        <div class="app-loader__bar" aria-hidden="true">
+          <span class="app-loader__bar-fill"></span>
+        </div>
+      </div>
+    </div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <img class="brand-logo hero-logo" src="./assets/logo.png" alt="شعار المجموعة" />
+        <p class="kicker">نموذج الإدخال</p>
+        <h1>وصل الأداء الإلكتروني</h1>
+        <p class="hero-text">
+          واجهة سريعة وواضحة لإنشاء وصل أداء مع توقيع رقمي.
+        </p>
+        <button id="theme-toggle" type="button" class="btn btn-ghost theme-toggle">
+          الوضع الداكن
+        </button>
+      </header>
+
+      <section class="card form-card" aria-labelledby="form-title">
+        <h2 id="form-title">بيانات الزبون</h2>
+        <form id="receipt-form" novalidate>
+          <div class="field">
+            <label for="receipt-date"
+              >تاريخ الوصل <span class="field-required" aria-hidden="true">إجباري</span></label
+            >
+            <input id="receipt-date" name="receipt-date" type="datetime-local" required />
+            <small class="field-help">اختر التاريخ والوقت كما تريد</small>
+          </div>
+
+          <div class="field">
+            <label for="phone"
+              >رقم الهاتف <span class="field-required" aria-hidden="true">إجباري</span></label
+            >
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              placeholder="06xxxxxxxx"
+              required
+            />
+            <small class="field-help">أدخل رقم الهاتف بصيغة 06xxxxxxxx</small>
+          </div>
+
+          <div class="field">
+            <label for="price"
+              >الثمن <span class="field-required" aria-hidden="true">إجباري</span></label
+            >
+            <input
+              id="price"
+              name="price"
+              type="number"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              required
+            />
+            <small class="field-help">القيمة الإجمالية بالدرهم</small>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="paid"
+                >الدفع <span class="field-required" aria-hidden="true">إجباري</span></label
+              >
+              <input
+                id="paid"
+                name="paid"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+                required
+              />
+              <small class="field-help">المبلغ الذي تم دفعه فعليا</small>
+            </div>
+
+            <div class="field">
+              <label for="remaining">الباقي</label>
+              <input
+                id="remaining"
+                name="remaining"
+                type="text"
+                readonly
+                value="0.00"
+                aria-live="polite"
+              />
+              <small class="field-help">يتم حسابه تلقائيا</small>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="card signature-card" aria-labelledby="signature-title">
+        <div class="signature-header">
+          <h2 id="signature-title">الإمضاء (رقمي)</h2>
+          <button
+            type="button"
+            id="signature-edit-toggle"
+            class="btn-icon signature-edit-toggle"
+            aria-label="إيقاف التعديل"
+            aria-pressed="true"
+            title="إيقاف التعديل"
+          >
+            <span class="signature-edit-toggle__icons" aria-hidden="true">
+              <svg
+                class="signature-edit-toggle__svg signature-edit-toggle__svg--lock"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <svg
+                class="signature-edit-toggle__svg signature-edit-toggle__svg--unlock"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <p class="hint">استعمل إصبعك للتوقيع.</p>
+        <div id="signature-box" class="signature-box">
+          <span id="signature-placeholder" class="signature-placeholder"
+            >وقّع هنا</span
+          >
+          <canvas
+            id="signature-canvas"
+            class="signature-canvas"
+            aria-label="منطقة التوقيع الرقمي"
+          ></canvas>
+        </div>
+        <div class="signature-actions">
+          <p id="signature-status" class="signature-status">جاهز للتوقيع</p>
+          <button id="clear-signature" type="button" class="btn btn-ghost">
+            مسح الإمضاء
+          </button>
+        </div>
+      </section>
+
+      <section class="card preview-card" aria-labelledby="preview-title">
+        <div class="preview-header">
+          <h2 id="preview-title">نموذج للوصل</h2>
+          <div class="actions">
+            <button id="download-pdf" type="button" class="btn btn-primary">
+              تحميل PDF
+            </button>
+          </div>
+        </div>
+
+        <article id="receipt-preview" class="receipt" dir="rtl" lang="ar">
+          <header class="receipt-top">
+            <img class="brand-logo receipt-logo" src="./assets/logo.png" alt="شعار المجموعة" />
+            <h3>مجموعة رشيد ولد المعطي</h3>
+            <p>برئاسة المعلم رشيد ولد المعطي</p>
+          </header>
+          <div class="receipt-meta">
+            <p>
+              <span>رقم الوصل:</span>
+              <strong id="preview-receipt-no">RC-000001</strong>
+            </p>
+            <p>
+              <span>التاريخ:</span>
+              <strong id="preview-date">-</strong>
+            </p>
+          </div>
+
+          <div class="receipt-grid">
+            <div class="row">
+              <span class="label">رقم الهاتف</span>
+              <span class="value" id="preview-phone">-</span>
+            </div>
+            <div class="row">
+              <span class="label">الثمن</span>
+              <span class="value" id="preview-price">0.00 درهم</span>
+            </div>
+            <div class="row">
+              <span class="label">الدفع</span>
+              <span class="value" id="preview-paid">0.00 درهم</span>
+            </div>
+            <div class="row">
+              <span class="label">الباقي</span>
+              <span class="value" id="preview-remaining">0.00 درهم</span>
+            </div>
+          </div>
+
+          <footer class="receipt-footer">
+            <p>الإمضاء</p>
+            <img id="preview-signature" alt="إمضاء الزبون" />
+            <div id="preview-signature-empty" class="signature-empty">
+              لا يوجد توقيع بعد
+            </div>
+          </footer>
+        </article>
+      </section>
+    </main>
+
+    <div
+      id="app-modal"
+      class="app-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="app-modal-title"
+      aria-describedby="app-modal-message"
+    >
+      <div class="app-modal__card">
+        <div class="app-modal__icon" aria-hidden="true">!</div>
+        <h3 id="app-modal-title" class="app-modal__title">تنبيه</h3>
+        <p id="app-modal-message" class="app-modal__message">رسالة</p>
+        <button id="app-modal-close" type="button" class="btn btn-primary app-modal__btn">
+          حسنا
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

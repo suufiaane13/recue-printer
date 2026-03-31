@@ -1,0 +1,27 @@
+# Dépendances
+node_modules/
+
+# Logs & runtime
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Variables d’environnement (clés, URLs)
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs / IDE (optionnel — décommenter si besoin)
+# .vscode/
+# .idea/
+
+# Fichiers temporaires
+*.tmp
+*.temp
+~$*

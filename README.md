@@ -20,6 +20,10 @@ Application web statique (HTML / CSS / JavaScript) pour générer un **reçu de 
 
 > L’installation ne fonctionne pas en ouvrant le fichier en `file://` : il faut une origine **http(s)**.
 
+#### Edge — « Tracking Prevention » / stockage
+
+Les messages **Tracking Prevention blocked access to storage** concernent souvent les **domaines tiers** (Google Fonts, jsDelivr). Ce n’est en général **pas bloquant** pour l’app. Le service worker **n’intercepte plus** les requêtes externes pour éviter des **503** et des ressources cassées.
+
 #### Si « Installer l’application » n’apparaît pas
 
 - Vérifier **HTTPS** (ou `http://localhost` en dev).

@@ -1,17 +1,9 @@
-/* PWA : doit rester à la racine du site (même origine que le manifest). */
-self.addEventListener("install", (event) => {
+/* PWA : même origine uniquement — pas d’interception des CDN (fonts, jsDelivr),
+   sinon Edge / Tracking Prevention peut faire échouer le fetch et provoquer des 503 artificiels. */
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") {
-    return;
-  }
-  event.respondWith(
-    fetch(event.request).catch(() => new Response("", { status: 503 }))
-  );
 });

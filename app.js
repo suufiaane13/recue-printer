@@ -305,6 +305,20 @@ function validatePhone(phone) {
   return /^0[5-7]\d{8}$/.test(phone);
 }
 
+/** Affichage / PDF : paires de chiffres, ex. 06 66 77 99 88 */
+function formatPhoneForDisplay(raw) {
+  const s = String(raw || "")
+    .trim()
+    .replace(/\s/g, "");
+  if (!s) {
+    return "-";
+  }
+  if (/^0[5-7]\d{8}$/.test(s)) {
+    return s.match(/.{2}/g).join(" ");
+  }
+  return raw.trim() || "-";
+}
+
 function getValidationError() {
   const phone = phoneInput.value.trim();
   const price = toNumber(priceInput.value);
@@ -361,7 +375,7 @@ function updatePreview() {
   const paid = toNumber(paidInput.value);
   const remaining = toNumber(remainingInput.value);
 
-  previewPhone.textContent = phone || "-";
+  previewPhone.textContent = formatPhoneForDisplay(phone);
   previewPrice.textContent = formatMAD(price);
   previewPaid.textContent = formatMAD(paid);
   previewRemaining.textContent = formatMAD(remaining);
@@ -945,6 +959,7 @@ restoreState().then(() => {
   requestAnimationFrame(() => {
     resizeCanvas();
     syncSignaturePadFixedTheme();
+    updatePreview();
     applyDefaultSignatureLockIfPresent();
   });
 });
